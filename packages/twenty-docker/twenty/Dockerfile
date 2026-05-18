@@ -257,3 +257,12 @@ LABEL org.opencontainers.image.source=https://github.com/twentyhq/twenty
 LABEL org.opencontainers.image.description="All-in-one Twenty image for local development and SDK usage. Includes PostgreSQL, Redis, server, and worker."
 
 ENTRYPOINT ["/init"]
+
+
+# ===========================================================================
+# Default target for builders that don't pass --target (e.g. easypanel).
+# Aliases the "twenty" stage (server + frontend, external Postgres + Redis).
+# Without this, the implicit last stage above (twenty-app-dev) would be built
+# and run with embedded Postgres/Redis, conflicting with a self-host setup.
+# ===========================================================================
+FROM twenty AS final
